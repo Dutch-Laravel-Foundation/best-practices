@@ -217,6 +217,24 @@ I've added a new best practice file. Please help me:
 New file: [PATH/FILENAME]
 ```
 
+## Git Workflow Requirements
+
+**Important Repository Rules:**
+- ❌ **No direct commits to `main` branch**
+- ✅ **Create a separate branch for each best practice**
+- ✅ **One best practice per pull request**
+- ✅ **Update the relevant section README.md when adding a practice**
+
+### Recommended Branch Naming
+```
+feature/add-[section]-[practice-name]
+
+Examples:
+feature/add-testing-unit-test-organization
+feature/add-security-csrf-protection
+feature/add-performance-database-optimization
+```
+
 ## Notes for Contributors
 
 When using Claude to work with this repository:
@@ -224,5 +242,7 @@ When using Claude to work with this repository:
 - Ask for verification against the quality checklist
 - Request help with link formatting and directory structure
 - Use Claude to check for duplicates before creating new practices
+- Remember to work in feature branches, not main
+- Submit one practice per pull request
 
 This ensures consistency and quality across all contributions to the Laravel Best Practices repository.

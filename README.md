@@ -14,6 +14,15 @@ We welcome contributions from the Laravel community. For version 1, we're focusi
 
 **Current Status:** Some sections are still under development. We're building this incrementally to keep the scope manageable.
 
+### Contribution Workflow
+
+**Important:** Direct commits to the `main` branch are not allowed.
+
+1. **Create a branch** for each new best practice
+2. **One practice per PR** - Submit each best practice as a separate pull request
+3. **Follow the format** outlined in [CLAUDE.md](./CLAUDE.md) for AI-assisted creation
+4. **Update section README** to include your new practice in the relevant directory
+
 ### How to Add a Guideline
 
 1. **Choose a category** - Find the best section for your guideline
