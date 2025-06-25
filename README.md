@@ -1,26 +1,34 @@
-# best-practices
+# Laravel Best Practices
 
-This document describes guidelines that can be used when setting up, developing, deploying and managing a Laravel application. Every Laravel project has different wishes and requirements regarding functionalities. It is therefore quite possible that a guideline fits well with one project and less so with another.
+A collection of proven guidelines for building, deploying, and maintaining [Laravel](https://laravel.com) applications.
 
-In addition, the budget of a project also plays a role. With a limited budget, you should not expect matters such as code coverage or testing to be taken care of down to the last detail. Implementing each guideline takes time and effort. That said, we are convinced that in the long term it will save time and resources if parties adhere to the guidelines as much as possible.
+## About This Guide
 
-We would like to invite everyone in the Best Practices working group within DLF to contribute to this document. Please note that for the first version of this document, we are focusing on commonly accepted guidelines within the Laravel community. That said, feel free to add your own guidelines. At a later time we will look at which guidelines are agreed upon and which may be too exotic for now.
+Every Laravel project is different. What works well for one project might not suit another. These guidelines are suggestions, not strict rules.
 
-The chapters and guidelines highlighted in blue are selected categories for version 1 of the final Best Practices document. We will add the other categories at a later time. This was chosen to keep the scope of the first version more manageable.
+Project budget matters too. With limited resources, you may not implement every guideline perfectly. That's okay. Even partial implementation of these practices will benefit your project in the long run.
 
-### Add your guideline as follows
+## Contributing
 
-- Determine in which category the guideline best fits. If you are missing a category, add it to the end of the document.  
-- Give it a clear title  
-- Write a short description  
-- Explain the benefits of the guideline under the heading ***Why.***   
-- Add code examples if applicable. Google docs isn't the most ideal for this in terms of syntax highlighting, so a screenshot is fine too.  
-- Indicate for which types of projects it is or is not suitable under the headings ***suitable for*** in ***less suitable*** for  
-- Include links to any additional resources that describe the guideline in more detail or provide more context.
+We welcome contributions from the Laravel community. For version 1, we're focusing on widely accepted practices. You can add your own guidelines too.
 
-### General feedback
+**Current Status:** Some sections are still under development. We're building this incrementally to keep the scope manageable.
 
-This document is still in its infancy. It is therefore quite possible that there are other ideas for how to divide this document or which parts a guideline should consist of. Feedback is greatly appreciated. Send a message to Nick Retel on Slack or email nick@dutchlaravelfoundation.nl
+### How to Add a Guideline
+
+1. **Choose a category** - Find the best section for your guideline
+2. **Create a clear title** - Make it descriptive and concise
+3. **Write a brief introduction** - Explain what the practice is
+4. **Add a "Why" section** - Explain the benefits
+5. **Include code examples** - Show practical implementation
+6. **Define project suitability** - When to use this practice and when not to
+7. **Add resources** - Link to relevant documentation or articles
+
+### Feedback
+
+This guide is evolving. We welcome your ideas on structure, content, and organization.
+
+**Contact:** Nick Retel on Slack or nick@dutchlaravelfoundation.nl
 
 ## Sections
 

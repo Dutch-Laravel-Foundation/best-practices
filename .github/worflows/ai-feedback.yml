@@ -1,0 +1,235 @@
+name: PR Fact Check with Claude
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  fact-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get PR diff
+        id: get-diff
+        run: |
+          # Get the diff for the PR
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          DIFF=$(git diff origin/${{ github.event.pull_request.base.ref }}...HEAD)
+
+          # Save diff to file to handle multiline content
+          echo "$DIFF" > pr_diff.txt
+
+          # Also get PR description
+          echo "${{ github.event.pull_request.body }}" > pr_description.txt
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install @anthropic-ai/sdk axios cheerio
+
+      - name: Fact-check with Claude
+        id: fact-check
+        run: |
+          cat << 'EOF' > fact_check.js
+          const Anthropic = require('@anthropic-ai/sdk');
+          const axios = require('axios');
+          const cheerio = require('cheerio');
+          const fs = require('fs');
+
+          const anthropic = new Anthropic({
+            apiKey: process.env.ANTHROPIC_API_KEY,
+          });
+
+          // Simple web search function using DuckDuckGo
+          async function searchWeb(query) {
+            try {
+              const response = await axios.get(`https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`);
+              const $ = cheerio.load(response.data);
+              const results = [];
+
+              $('.result').slice(0, 5).each((i, elem) => {
+                const title = $(elem).find('.result__title').text().trim();
+                const snippet = $(elem).find('.result__snippet').text().trim();
+                const url = $(elem).find('.result__url').text().trim();
+
+                if (title && snippet) {
+                  results.push({ title, snippet, url });
+                }
+              });
+
+              return results;
+            } catch (error) {
+              console.log('Search failed:', error.message);
+              return [];
+            }
+          }
+
+          // Fetch content from a URL
+          async function fetchContent(url) {
+            try {
+              const response = await axios.get(url, {
+                timeout: 10000,
+                headers: { 'User-Agent': 'Mozilla/5.0 (compatible; GitHubAction/1.0)' }
+              });
+              const $ = cheerio.load(response.data);
+
+              // Extract main content (remove scripts, styles, etc.)
+              $('script, style, nav, footer, aside').remove();
+              const content = $('main, article, .content, body').first().text().trim();
+
+              return content.slice(0, 2000); // Limit content length
+            } catch (error) {
+              console.log(`Failed to fetch ${url}:`, error.message);
+              return null;
+            }
+          }
+
+          async function factCheck() {
+            try {
+              const diff = fs.readFileSync('pr_diff.txt', 'utf8');
+              const description = fs.readFileSync('pr_description.txt', 'utf8');
+
+              // Extract key topics/technologies for research
+              const analysisPrompt = `Based on this PR content, identify 2-3 key technologies, frameworks, or practice areas that should be researched for current best practices:
+
+              PR Description: ${description}
+              Changes: ${diff.slice(0, 1000)}
+
+              Return just a comma-separated list of search terms, like: "React hooks best practices, Node.js security, TypeScript patterns"`;
+
+              const analysisResponse = await anthropic.messages.create({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 150,
+                messages: [{ role: 'user', content: analysisPrompt }]
+              });
+
+              const searchTerms = analysisResponse.content[0].text.split(',').map(term => term.trim());
+              console.log('Researching:', searchTerms);
+
+              // Research each topic
+              let researchResults = '';
+              for (const term of searchTerms.slice(0, 3)) { // Limit to 3 searches
+                console.log(`Searching for: ${term}`);
+                const searchResults = await searchWeb(term);
+
+                if (searchResults.length > 0) {
+                  researchResults += `\n## Research Results for "${term}":\n`;
+                  for (const result of searchResults.slice(0, 3)) { // Top 3 results
+                    researchResults += `- **${result.title}**: ${result.snippet} (${result.url})\n`;
+                  }
+
+                  // Try to fetch detailed content from top result
+                  if (searchResults[0].url.startsWith('http')) {
+                    const content = await fetchContent(searchResults[0].url);
+                    if (content) {
+                      researchResults += `\nKey insights from ${searchResults[0].url}:\n${content.slice(0, 500)}...\n`;
+                    }
+                  }
+                }
+
+                // Small delay to be respectful
+                await new Promise(resolve => setTimeout(resolve, 1000));
+              }
+
+              const prompt = `This is a best practices repository. Please review the following pull request which likely contains either:
+          - A new best practice being added
+          - Optimizations/improvements to existing best practices
+          - Updates to documentation or examples
+
+          PR Description:
+          ${description}
+
+          Code Changes:
+          ${diff}
+
+          ## Current Research Context:
+          I've researched the latest information about the technologies/practices mentioned in this PR:
+          ${researchResults}
+
+          Please analyze and provide feedback on:
+
+          **For New Best Practices:**
+          1. **Accuracy & Currency**: Are the recommended practices current and align with the latest research above? Are there any outdated recommendations?
+          2. **Completeness**: Does the practice cover important aspects? Are there missing considerations from current best practices?
+          3. **Clarity**: Is the practice clearly explained with good examples?
+          4. **Context**: Is it clear when this practice should/shouldn't be applied?
+          5. **Code Examples**: If included, are the code snippets correct, secure, and following current standards?
+
+          **For Optimizations to Existing Practices:**
+          1. **Improvement Validity**: Is the proposed change actually an improvement based on current standards?
+          2. **Compatibility**: Does the optimization maintain the core value of the original practice?
+          3. **Potential Trade-offs**: Are there any downsides or limitations to highlight?
+          4. **Evidence**: Are the optimization claims well-supported by current research?
+
+          **Research-Informed Analysis:**
+          - How does this PR align with or differ from current industry best practices found in research?
+          - Are there newer approaches or considerations that should be mentioned?
+          - Does the PR miss any important recent developments in the field?
+
+          **General Review Points:**
+          - Factual accuracy of all claims and statements
+          - Currency of technologies/frameworks referenced
+          - Potential security implications
+          - Consistency with other practices in the repository
+          - Documentation quality and examples
+
+          Provide your feedback in markdown format. Be constructive and specific. Reference the research findings when relevant. If you identify issues, suggest improvements. If everything looks excellent, acknowledge the quality of the contribution.`;
+
+              const message = await anthropic.messages.create({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 2000,
+                messages: [{ role: 'user', content: prompt }]
+              });
+
+              const feedback = message.content[0].text;
+
+              // Save feedback to file
+              fs.writeFileSync('feedback.txt', feedback);
+              console.log('Fact-check with research completed successfully');
+
+            } catch (error) {
+              console.error('Error during fact-check:', error);
+              process.exit(1);
+            }
+          }
+
+          factCheck();
+          EOF
+
+          node fact_check.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Post comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const feedback = fs.readFileSync('feedback.txt', 'utf8');
+
+            const body = `## 🤖 Claude Fact-Check Results
+
+            ${feedback}
+
+            ---
+            *This review was automatically generated by Claude AI*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
