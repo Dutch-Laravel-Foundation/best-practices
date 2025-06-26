@@ -97,6 +97,8 @@ Check the practice is in the correct directory:
 - [ ] Real-world examples when applicable
 - [ ] Balanced view (includes limitations)
 - [ ] Laravel-specific (not generic PHP advice)
+- [ ] **Tight focus on the core best practice** - avoid mixing multiple topics
+- [ ] Link to other best practices for related topics rather than covering them in detail
 
 ## Repository Structure
 
@@ -120,6 +122,12 @@ Each section directory should have:
 - Use kebab-case: `use-policies-for-authorization.md`
 - Be descriptive but concise
 - Avoid redundant words like "laravel" or "best-practice"
+
+### Content Focus Guidelines
+- **Stay focused on one specific best practice** - don't try to cover multiple topics
+- **Avoid scope creep** - configuration details, deployment, or infrastructure should be separate practices
+- **Link to related practices** instead of explaining them in detail
+- **Keep examples minimal and directly relevant** to the core practice
 
 ### Content Template
 ```markdown

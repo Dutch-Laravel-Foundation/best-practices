@@ -14,15 +14,6 @@ We welcome contributions from the Laravel community. For version 1, we're focusi
 
 **Current Status:** Some sections are still under development. We're building this incrementally to keep the scope manageable.
 
-### Contribution Workflow
-
-**Important:** Direct commits to the `main` branch are not allowed.
-
-1. **Create a branch** for each new best practice
-2. **One practice per PR** - Submit each best practice as a separate pull request
-3. **Follow the format** outlined in [CLAUDE.md](./CLAUDE.md) for AI-assisted creation
-4. **Update section README** to include your new practice in the relevant directory
-
 ### How to Add a Guideline
 
 1. **Choose a category** - Find the best section for your guideline
@@ -33,11 +24,16 @@ We welcome contributions from the Laravel community. For version 1, we're focusi
 6. **Define project suitability** - When to use this practice and when not to
 7. **Add resources** - Link to relevant documentation or articles
 
+### Content Guidelines
+
+- **Keep a tight focus** - Each best practice should cover one specific topic
+- **Avoid mixing topics** - Configuration, deployment, and infrastructure details should be separate practices
+- **Link to related practices** - Reference other best practices instead of explaining them in detail
+- **Minimal, relevant examples** - Include only code examples that directly demonstrate the core practice
+
 ### Feedback
 
-This guide is evolving. We welcome your ideas on structure, content, and organization.
-
-**Contact:** Nick Retel on Slack or nick@dutchlaravelfoundation.nl
+This guide is evolving. We welcome your ideas on structure, content, and organization. If you have questions feel free to ask
 
 ## Sections
 
