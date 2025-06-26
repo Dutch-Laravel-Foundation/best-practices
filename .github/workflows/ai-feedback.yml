@@ -30,6 +30,13 @@ jobs:
           # Also get PR description
           echo "${{ github.event.pull_request.body }}" > pr_description.txt
 
+          # Get CLAUDE.md guidelines
+          if [ -f "CLAUDE.md" ]; then
+            cat CLAUDE.md > guidelines.txt
+          else
+            echo "No CLAUDE.md found" > guidelines.txt
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -101,6 +108,7 @@ jobs:
             try {
               const diff = fs.readFileSync('pr_diff.txt', 'utf8');
               const description = fs.readFileSync('pr_description.txt', 'utf8');
+              const guidelines = fs.readFileSync('guidelines.txt', 'utf8');
 
               // Extract key topics/technologies for research
               const analysisPrompt = `Based on this PR content, identify 2-3 key technologies, frameworks, or practice areas that should be researched for current best practices:
@@ -144,49 +152,60 @@ jobs:
                 await new Promise(resolve => setTimeout(resolve, 1000));
               }
 
-              const prompt = `This is a best practices repository. Please review the following pull request which likely contains either:
-          - A new best practice being added
-          - Optimizations/improvements to existing best practices
-          - Updates to documentation or examples
+              const prompt = `This is a best practices repository. Please review the following pull request according to the repository guidelines.
 
-          PR Description:
+          ## Repository Guidelines (from CLAUDE.md):
+          ${guidelines}
+
+          ## PR Description:
           ${description}
 
-          Code Changes:
+          ## Code Changes:
           ${diff}
 
           ## Current Research Context:
           I've researched the latest information about the technologies/practices mentioned in this PR:
           ${researchResults}
 
-          Please analyze and provide feedback on:
+          ## IMPORTANT: Please analyze against the CLAUDE.md guidelines, specifically checking:
 
-          **For New Best Practices:**
-          1. **Accuracy & Currency**: Are the recommended practices current and align with the latest research above? Are there any outdated recommendations?
-          2. **Completeness**: Does the practice cover important aspects? Are there missing considerations from current best practices?
-          3. **Clarity**: Is the practice clearly explained with good examples?
-          4. **Context**: Is it clear when this practice should/shouldn't be applied?
-          5. **Code Examples**: If included, are the code snippets correct, secure, and following current standards?
+          **1. Content Focus (CRITICAL):**
+          - [ ] Does the practice maintain a **tight focus on one specific topic**?
+          - [ ] Are there suggestions for **scope creep** (e.g., configuration details, deployment, infrastructure)?
+          - [ ] Should any off-topic content be **moved to separate practices**?
+          - [ ] Are external topics properly **linked to other practices** rather than explained in detail?
 
-          **For Optimizations to Existing Practices:**
-          1. **Improvement Validity**: Is the proposed change actually an improvement based on current standards?
-          2. **Compatibility**: Does the optimization maintain the core value of the original practice?
-          3. **Potential Trade-offs**: Are there any downsides or limitations to highlight?
-          4. **Evidence**: Are the optimization claims well-supported by current research?
+          **2. Quality Checklist from CLAUDE.md:**
+          - [ ] Clear, descriptive title using sentence case
+          - [ ] Introduction section explaining what the practice is
+          - [ ] "Why" section with bullet points explaining benefits
+          - [ ] "Suitable For" section describing ideal use cases
+          - [ ] "Less Suitable" section describing when not to use
+          - [ ] "More Info" section with additional resources
+          - [ ] Proper markdown formatting and code examples
+          - [ ] Correct link formatting (relative for internal, descriptive titles for external)
 
-          **Research-Informed Analysis:**
-          - How does this PR align with or differ from current industry best practices found in research?
-          - Are there newer approaches or considerations that should be mentioned?
-          - Does the PR miss any important recent developments in the field?
+          **3. Technical Accuracy:**
+          - Are the recommended practices current and align with the latest research?
+          - Are code examples correct, secure, and following current standards?
+          - Does the PR align with current industry best practices?
 
-          **General Review Points:**
-          - Factual accuracy of all claims and statements
-          - Currency of technologies/frameworks referenced
-          - Potential security implications
-          - Consistency with other practices in the repository
-          - Documentation quality and examples
+          **4. Scope Evaluation:**
+          When reviewing, be especially critical of:
+          - Configuration details that don't directly relate to the core practice
+          - Infrastructure or deployment specifics (unless that IS the practice)
+          - Queue configuration, worker setup, monitoring tools (unless the practice is specifically about those)
+          - Any content that would be better as a separate best practice
 
-          Provide your feedback in markdown format. Be constructive and specific. Reference the research findings when relevant. If you identify issues, suggest improvements. If everything looks excellent, acknowledge the quality of the contribution.`;
+          **EXAMPLE of scope creep to flag:**
+          If a practice is about "keeping commands small and deferring to jobs", suggestions about:
+          - Queue configuration details → Should be a separate "Queue Configuration Best Practices"
+          - Horizon setup → Should be a separate "Queue Monitoring with Horizon"
+          - Worker deployment → Should be a separate "Deploying Queue Workers"
+
+          Instead, suggest: "For queue configuration details, see [link to queue configuration best practice]"
+
+          Provide your feedback in markdown format. Be constructive but firm about maintaining focus. If you identify scope creep, clearly explain what should be removed or moved to a separate practice. Reference the CLAUDE.md guidelines when pointing out issues.`;
 
               const message = await anthropic.messages.create({
                 model: 'claude-sonnet-4-20250514',
