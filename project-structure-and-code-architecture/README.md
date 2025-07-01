@@ -3,6 +3,7 @@
 - [Introduction](#introduction)
 - [Keep the Standard Folder Structure](./keep-the-standard-folder-structure.md)
 - [Use Policies and Gates for Authorization](./use-policies-and-gates-for-authorization.md)
+- [Keep Commands Small and Defer Business Logic to Jobs](./keep-commands-small-defer-to-jobs.md)
 
 <a name="introduction"></a>
 ## Introduction
