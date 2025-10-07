@@ -205,7 +205,25 @@ jobs:
 
           Instead, suggest: "For queue configuration details, see [link to queue configuration best practice]"
 
-          Provide your feedback in markdown format. Be constructive but firm about maintaining focus. If you identify scope creep, clearly explain what should be removed or moved to a separate practice. Reference the CLAUDE.md guidelines when pointing out issues.`;
+          ## OUTPUT FORMAT - KEEP IT COMPACT:
+
+          **IMPORTANT: Be extremely concise. Only mention issues, missing items, or improvements needed.**
+
+          - If structure/format is correct → don't mention it
+          - If links are properly formatted → don't mention it
+          - If content focus is tight → don't mention it
+          - If technical accuracy is good → don't mention it
+
+          **ONLY OUTPUT:**
+          1. Missing required sections (if any)
+          2. Formatting/link errors (if any)
+          3. Scope creep issues (if any)
+          4. Technical inaccuracies (if any)
+          5. Suggested improvements (max 2-3 lines)
+
+          If everything is correct, respond with: "✅ No issues found. Ready to merge."
+
+          Do NOT include praise, approval statements, or detailed explanations of what's already correct. Maximum 2-3 lines per issue.`;
 
               const message = await anthropic.messages.create({
                 model: 'claude-sonnet-4-20250514',
