@@ -34,9 +34,10 @@ Content Security Policy (CSP) is a security header that helps prevent Cross-Site
 <a name="more-info"></a>
 ## More Info
 
-- [Spatie Laravel CSP Package](https://github.com/spatie/laravel-csp) - Recommended Laravel implementation
+- [Spatie Laravel CSP Package](https://github.com/spatie/laravel-csp) — recommended Laravel implementation
 - [MDN Content Security Policy Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 - [CSP Level 3 Specification](https://www.w3.org/TR/CSP3/)
 - [Google CSP Evaluator](https://csp-evaluator.withgoogle.com/)
 - [OWASP CSP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
 - [Dutch Laravel Foundation CSP Guide](https://dutchlaravelfoundation.nl/kennis/verbeter-de-beveiliging-van-je-laravel-applicatie-met-csp-content-security-policies)
+- [Prevent Common Vulnerabilities](./prevent-common-vulnerabilities.md) — for XSS output escaping, CSRF, SQL injection, and other security practices

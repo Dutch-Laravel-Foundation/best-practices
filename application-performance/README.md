@@ -1,8 +1,9 @@
 # Application Performance
 
 - [Introduction](#introduction)
+- [Use Caching Effectively](./use-caching-effectively.md)
 
 <a name="introduction"></a>
 ## Introduction
 
-> This section is currently under development. More best practices will be added in future versions.
+This section covers best practices for optimizing the performance of Laravel applications, including caching strategies, query optimization, and efficient resource usage.

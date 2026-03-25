@@ -26,5 +26,6 @@ Policies and gates are standard components within Laravel that can be used to de
 <a name="more-info"></a>
 ## More Info
 
-- [https://laravel.com/docs/12.x/authorization#gates](https://laravel.com/docs/12.x/authorization#gates)  
-- Save roles and permissions to the database - [https://spatie.be/docs/laravel-permission/v6/introduction](https://spatie.be/docs/laravel-permission/v6/introduction)
+- [Laravel Authorization Documentation](https://laravel.com/docs/authorization)
+- [Spatie Laravel Permission Package](https://spatie.be/docs/laravel-permission/v6/introduction) — save roles and permissions to the database
+- [Prevent Common Vulnerabilities](../security-and-authentication/prevent-common-vulnerabilities.md) — for additional security practices like mass assignment protection and CSRF

@@ -177,3 +177,4 @@ Always ensure your queue connection is configured for asynchronous processing wh
 - [Supervisor Configuration for Laravel](https://laravel.com/docs/queues#supervisor-configuration)
 - [Laravel Horizon for Queue Monitoring](https://laravel.com/docs/horizon)
 - [Laravel Queue Workers Documentation](https://laravel.com/docs/queues#running-the-queue-worker)
+- [Configure Queued Jobs Properly](./configure-queued-jobs-properly.md) — for advanced job configuration like backoff, rate limiting, and batching

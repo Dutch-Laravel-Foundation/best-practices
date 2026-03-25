@@ -82,3 +82,4 @@ public function up()
 - [Laravel Migrations Documentation](https://laravel.com/docs/migrations)
 - [Laravel Query Builder Documentation](https://laravel.com/docs/queries)
 - [Laravel Database Seeding Documentation](https://laravel.com/docs/seeding)
+- [Write Effective Migrations](./write-effective-migrations.md) — for general migration best practices like indexing, reversibility, and focused migrations
