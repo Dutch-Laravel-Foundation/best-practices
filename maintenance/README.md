@@ -1,8 +1,9 @@
 # Maintenance
 
 - [Introduction](#introduction)
+- [Handle Exceptions Properly](./handle-exceptions-properly.md)
 
 <a name="introduction"></a>
 ## Introduction
 
-> This section is currently under development. More best practices will be added in future versions.
+This section covers best practices for maintaining Laravel applications in production, including exception handling, logging, monitoring, and keeping dependencies up to date.

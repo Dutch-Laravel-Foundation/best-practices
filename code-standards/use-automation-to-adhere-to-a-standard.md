@@ -24,5 +24,6 @@ Adhering to a given standard can be done manually or via automated tooling. This
 <a name="more-info"></a>
 ## More Info
 
-- [https://laravel.com/docs/12.x/pint](https://laravel.com/docs/12.x/pint)  
-- [https://github.com/marketplace/actions/laravel-pint](https://github.com/marketplace/actions/laravel-pint)
+- [Laravel Pint Documentation](https://laravel.com/docs/pint)
+- [Laravel Pint GitHub Action](https://github.com/marketplace/actions/laravel-pint)
+- [Adhere to a Single Standard](./adhere-to-a-single-standard.md) — choose which standard to enforce

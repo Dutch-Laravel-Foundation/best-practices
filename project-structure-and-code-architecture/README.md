@@ -4,6 +4,9 @@
 - [Keep the Standard Folder Structure](./keep-the-standard-folder-structure.md)
 - [Use Policies and Gates for Authorization](./use-policies-and-gates-for-authorization.md)
 - [Keep Commands Small and Defer Business Logic to Jobs](./keep-commands-small-defer-to-jobs.md)
+- [Use Action Classes for Business Logic](./use-action-classes-for-business-logic.md)
+- [Use Configuration Properly](./use-configuration-properly.md)
+- [Configure Queued Jobs Properly](./configure-queued-jobs-properly.md)
 
 <a name="introduction"></a>
 ## Introduction

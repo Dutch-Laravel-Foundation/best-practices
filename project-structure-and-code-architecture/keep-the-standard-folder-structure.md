@@ -25,6 +25,7 @@ Laravel has a standard folder structure. The structure can be adjusted as desire
 <a name="more-info"></a>
 ## More Info
 
-- [https://www.youtube.com/watch?v=KBigS5vLwZk](https://www.youtube.com/watch?v=KBigS5vLwZk)  
-- [https://benjamincrozat.com/laravel-best-practices#stick-to-the-default-folder-structure](https://benjamincrozat.com/laravel-best-practices#stick-to-the-default-folder-structure)  
-- [https://benjamincrozat.com/laravel-architecture-best-practices#keep-the-default-folder-structure](https://benjamincrozat.com/laravel-architecture-best-practices#keep-the-default-folder-structure)
+- [Laravel Folder Structure Explained (YouTube)](https://www.youtube.com/watch?v=KBigS5vLwZk)
+- [Laravel Best Practices — Stick to the Default Folder Structure](https://benjamincrozat.com/laravel-best-practices#stick-to-the-default-folder-structure)
+- [Laravel Architecture Best Practices — Keep the Default Folder Structure](https://benjamincrozat.com/laravel-architecture-best-practices#keep-the-default-folder-structure)
+- [Use Action Classes for Business Logic](./use-action-classes-for-business-logic.md) — for organizing business logic within the standard structure

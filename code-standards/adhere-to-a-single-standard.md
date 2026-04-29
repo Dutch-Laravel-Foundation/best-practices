@@ -25,5 +25,6 @@ In the end it doesn't really matter *which* standard you choose, as long as you 
 <a name="more-info"></a>
 ## More Info
 
-- [https://www.php-fig.org/per/coding-style/](https://www.php-fig.org/per/coding-style/)  
-- [https://www.php-fig.org/psr/psr-12/](https://www.php-fig.org/psr/psr-12/)
+- [PER Coding Style](https://www.php-fig.org/per/coding-style/)
+- [PSR-12: Extended Coding Style Guide](https://www.php-fig.org/psr/psr-12/)
+- [Use Automation to Adhere to a Standard](./use-automation-to-adhere-to-a-standard.md) — enforce your chosen standard with tooling

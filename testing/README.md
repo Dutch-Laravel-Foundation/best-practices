@@ -13,3 +13,4 @@ Testing is a critical part of Laravel application development. Laravel provides 
 
 - [Use PHPUnit or Pest for Testing](./use-phpunit-or-pest-for-testing.md) - Choose between Laravel's officially supported testing frameworks for writing automated tests
 - [Stick to One Testing Framework](./stick-to-one-testing-framework.md) - Maintain consistency by using either PHPUnit or Pest throughout your entire test suite, not both
+- [Follow Testing Best Practices](./follow-testing-best-practices.md) - Laravel-specific testing patterns for speed, reliability, and expressiveness
